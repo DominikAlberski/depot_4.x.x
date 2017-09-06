@@ -11,3 +11,9 @@ two:
   description: MyText
   image_url: MyString
   price: 9.99
+
+ruby:
+  tittle: My book name
+  description: lets do this
+  price: 49.99
+  image_url: rrr.jpg
