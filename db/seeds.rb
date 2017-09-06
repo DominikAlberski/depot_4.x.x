@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 10.times do |n|
-  Product.create!(tittle: "seeds sample title nr #{n}",
+  Product.create!(title: "seeds sample title nr #{n}",
                   description: %(<p> Sample description from seeds </p>),
                   image_url: 'ruby.jpg',
                   price: rand(0..99.99))

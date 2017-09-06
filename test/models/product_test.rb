@@ -10,14 +10,14 @@ class ProductTest < ActiveSupport::TestCase
   test "products atributes must not be empty" do
     product = Product.new
     assert product.invalid?
-    assert product.errors[:tittle].any?
+    assert product.errors[:title].any?
     assert product.errors[:description].any?
     assert product.errors[:price].any?
     assert product.errors[:image_url].any?
   end
 
   test "product price must be positive" do
-    product = Product.new(tittle: "ruby",
+    product = Product.new(title: "ruby ruby ruby",
                           description: 'test descryption nnn',
                           image_url: 'xxx.jpg')
     product.price = -1
@@ -33,11 +33,12 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   def new_product(image_url)
-    Product.new(tittle: 'test title',
+    Product.new(title: 'test title',
                 description: 'test descryption',
                 price: 1,
                 image_url: image_url)
   end
+
   test 'image_url' do
     ok = %w(fred.gif fred.jpg fred.png FRED.GIF FRED.JPG FRED.Png http://a.b.c/x/y/z/fred.gif)
     bad = %w(fred.doc fred.gif/more fred.gif.more)
@@ -51,11 +52,20 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   test 'product is not valid without a unique title' do
-    product = Product.new(tittle: products(:ruby).tittle,
+    product = Product.new(title: products(:ruby).title,
                           description: 'some',
                           price: 1,
                           image_url: 'x.jpg')
     assert product.invalid?
-    assert_equal(["has already been taken"], product.errors[:tittle])
+    assert_equal(["has already been taken"], product.errors[:title])
+  end
+
+  test 'product title must be at least 10 characters long' do
+    product = Product.new(title: 1,
+                          description: 'some',
+                          price: 1,
+                          image_url: 'x.jpg')
+    assert product.invalid?
+    assert_equal(["is too short (minimum is 10 characters)"], product.errors[:title])
   end
 end
