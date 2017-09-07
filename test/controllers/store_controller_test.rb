@@ -8,6 +8,11 @@ class StoreControllerTest < ActionController::TestCase
     assert_select '#main .entry', 3
     assert_select 'h3', 'My book name'
     assert_select '.price', /\$[,\d]+\.\d\d/
+    assert_select '#visit_counter', 0
   end
 
+  test 'counter should be visible after 6 entries' do
+    6.times { get :index }
+    assert_select '#visit_counter', 1
+  end
 end
