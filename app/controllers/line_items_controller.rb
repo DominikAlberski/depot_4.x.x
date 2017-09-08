@@ -58,15 +58,23 @@ class LineItemsController < ApplicationController
   # DELETE /line_items/1
   # DELETE /line_items/1.json
   def destroy
-    @line_item.destroy
-    respond_to do |format|
-      format.html { redirect_to line_items_url, notice: 'Line item was successfully destroyed.' }
-      format.json { head :no_content }
+    if @line_item.quantity == 1
+      @line_item.destroy
+      redirect_to cart_url(@line_item.cart), notice: 'Item was removed.'
+    else
+      @line_item.quantity -= 1
+      @line_item.save!
+      redirect_to cart_url(@line_item.cart), notice: 'quantity have changed'
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
+
+    # def check_quantity(line_item)
+    #   if line_item.quantity > 1
+    # end
+
     def set_line_item
       @line_item = LineItem.find(params[:id])
     end

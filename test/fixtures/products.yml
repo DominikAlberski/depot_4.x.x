@@ -17,3 +17,9 @@ ruby:
   description: lets do this
   price: 49.99
   image_url: rrr.jpg
+
+rails:
+  title: My rails book
+  description: rails guaide
+  price: 29.99
+  image_url: rrr.png
