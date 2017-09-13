@@ -1,6 +1,6 @@
 class LineItemsController < ApplicationController
   include CurrentCart
-  before_action :set_cart, only: [:create]
+  before_action :set_cart, only: [:create, :destroy]
   before_action :set_line_item, only: [:show, :edit, :update, :destroy]
 
   # GET /line_items
@@ -59,29 +59,34 @@ class LineItemsController < ApplicationController
   # DELETE /line_items/1
   # DELETE /line_items/1.json
   def destroy
-    if @line_item.quantity == 1
-      @line_item.destroy
-      redirect_to cart_url(@line_item.cart), notice: 'Item was removed.'
-    else
-      @line_item.quantity -= 1
-      @line_item.save!
-      redirect_to cart_url(@line_item.cart), notice: 'quantity have changed'
+    respond_to do |format|
+      if @line_item.quantity == 1
+        @line_item.destroy
+        format.js
+        format.html { redirect_to store_url, notice: 'Item was removed.' }
+      else
+        @line_item.quantity -= 1
+        @line_item.save!
+        format.js
+        format.html { redirect_to store_url, notice: 'quantity have changed' }
+      end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
 
-    # def check_quantity(line_item)
-    #   if line_item.quantity > 1
-    # end
+  # Use callbacks to share common setup or constraints between actions.
 
-    def set_line_item
-      @line_item = LineItem.find(params[:id])
-    end
+  # def check_quantity(line_item)
+  #   if line_item.quantity > 1
+  # end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def line_item_params
-      params.require(:line_item).permit(:product_id)
-    end
+  def set_line_item
+    @line_item = LineItem.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def line_item_params
+    params.require(:line_item).permit(:product_id)
+  end
 end
