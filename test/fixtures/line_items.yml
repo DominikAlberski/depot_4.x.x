@@ -2,12 +2,14 @@
 
 position_one:
   product: ruby
+  order: one
   cart: jim_cart
   quantity: 1
   price: 49.99
 
 position_two:
   product: rails
+  order: one
   cart: jim_cart
   quantity: 1
   price: 29.99
