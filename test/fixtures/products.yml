@@ -13,7 +13,7 @@ two:
   price: 9.99
 
 ruby:
-  title: My book name
+  title: Programing Ruby 1.9
   description: lets do this
   price: 49.99
   image_url: rrr.jpg
